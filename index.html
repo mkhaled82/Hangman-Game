@@ -95,14 +95,6 @@
         }
         else {}
       }
-      //----Dear TA grading my homework; i chose to iterate through entire word
-      //instead of using the string.search function in order to match multiple 
-      //positions within the word in case user keystroke matches multipe positions
-      //
-      //var characterPosition=0;
-      //characterPosition = selectedWord.search(userGuess);
-      //hiddenWord = modifyCharAt(characterPosition, userGuess, hiddenWord);
-      //guessesLeft--;
       
     }
     //if no conditions to matches then negate guesses
@@ -111,7 +103,6 @@
     }
 
     // win or lose decision
-    // need to add code that shows pic on separate div when fucker wins
     if (targetGuesses === 0){
       console.log("User won, will select a new word and start over");
       wins++;
@@ -135,7 +126,7 @@
       targetGuesses = selectedWord.length;
     }
 
-    else { } //do nothing
+    else { }
 
     var guessedLetters= guessArray.toString();
     var results = 
