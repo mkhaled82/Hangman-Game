@@ -1,0 +1,46 @@
+*{
+	box-sizing: border-box;
+
+}
+
+body{
+	  font-family: 'New Rocker', cursive;
+
+  	font-size: 18px;
+  	line-height: 34px;
+  	
+	background: url("../images/rock_band.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+	
+}
+
+h1{
+  text-align: center;
+  
+  font-size: 100px;
+}
+
+.headingarea{
+  text-align: center;
+  color:#ffffff;
+}
+
+.gamearea{
+  text-align: center;
+  color: #000000;
+  padding-top: 50px;
+  font-size: 24px;
+}
+
+#image{
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin:0 auto;
+  clear: both;
+}

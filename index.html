@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hangman Game</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=New+Rocker" rel="stylesheet">
+  </head>
+<body>
+  
+  <div class="headingarea"> 
+    <h1> Hangman </h1>
+    <h3>Press Any Key To Get Started!</h3>
+  </div>
+  <div class="winningarea"> 
+  </div>
+  <div class="gamearea"> 
+  </div>
+
+ <script>
+
+  //function that randomly chooses a word from the array//
+  function chooseWord () {
+    var words = ['metallica', 'gunsnroses', 'pinkfloyd', 'nirvana', 'scorpions'];
+    var word = words[Math.floor(Math.random() * words.length)];
+    return(word);  
+  };
+ 
+  //function that converts chosen word into "-" for each letter//
+  function blanksFromAnswer ( chosenWord ) {
+    var result = ""; // This is the variable we want to use  
+    for(var i=0; i < chosenWord.length;i++) { 
+        result = result + "-" ;
+    }
+    return result;
+  }
+
+  function modifyCharAt ( number, character, originalString ) {
+    var before;
+    var after;
+    var newstr;
+    var strlen = originalString.length;
+
+    before = originalString.substr(0, number);
+    after = originalString.substr(number+1, strlen);
+    newstr= before + character  + after;
+    return newstr;
+  }
+
+
+  var wins = 0;
+  var losses = 0;
+  var guessesLeft = 13;
+  var userGuess = 0;
+  var guessArray =[];
+  var targetGuesses = 0;
+
+ 
+  var selectedWord;
+  selectedWord = chooseWord();
+    console.log(selectedWord);
+  targetGuesses = selectedWord.length;
+
+  var hiddenWord;
+  hiddenWord = blanksFromAnswer(selectedWord);
+  var initial_html_str = 
+    "<p>Wins:</p>" +
+    "<p>Current word:" + hiddenWord + "</p>" +
+    "<p>Number of guesses remaining " + guessesLeft + "</p>" +
+    "<p>Letters already guessed ";
+
+  document.querySelector(".gamearea").innerHTML = initial_html_str;
+
+
+  document.onkeyup = function(event){
+  
+    var userGuess = event.key;
+    //console.log(userGuess);
+
+    if (guessArray.indexOf(userGuess) > -1){
+      //alert("You already guessed userGuess!! try another one please");
+    }
+    else {
+      guessArray.push(userGuess);
+      guessesLeft--;
+    }
+
+    //do nothing when user already guessed letter in word
+    if (selectedWord.includes(userGuess)) {
+
+      for (var pos=0; pos<selectedWord.length; pos++){
+        if (selectedWord.charAt(pos) === userGuess){
+          hiddenWord = modifyCharAt(pos, userGuess, hiddenWord);
+          targetGuesses--;
+        }
+        else {}
+      }
+      //----Dear TA grading my homework; i chose to iterate through entire word
+      //instead of using the string.search function in order to match multiple 
+      //positions within the word in case user keystroke matches multipe positions
+      //
+      //var characterPosition=0;
+      //characterPosition = selectedWord.search(userGuess);
+      //hiddenWord = modifyCharAt(characterPosition, userGuess, hiddenWord);
+      //guessesLeft--;
+      
+    }
+    //if no conditions to matches then negate guesses
+    else {
+      //guessesLeft--;
+    }
+
+    // win or lose decision
+    // need to add code that shows pic on separate div when fucker wins
+    if (targetGuesses === 0){
+      console.log("User won, will select a new word and start over");
+      wins++;
+      document.querySelector(".winningarea").innerHTML = selectedWord;
+      guessesLeft = 13;
+      guessArray=[];
+      selectedWord = chooseWord();
+      console.log(selectedWord);
+      hiddenWord = blanksFromAnswer(selectedWord);
+      targetGuesses = selectedWord.length;
+    }
+
+    else if ( (guessesLeft===0) && (targetGuesses > 0) ){
+      console.log("User lost, will select a new word and start over");
+      losses++;
+      guessesLeft = 13;
+      guessArray=[];
+      selectedWord = chooseWord();
+      console.log(selectedWord);
+      hiddenWord = blanksFromAnswer(selectedWord);
+      targetGuesses = selectedWord.length;
+    }
+
+    else { } //do nothing
+
+    var guessedLetters= guessArray.toString();
+    var results = 
+      "<p>Wins:" + wins + "</p>" +
+      "<p>Current word: "  +  hiddenWord  + "</p>" +
+      "<p>Number of Guesses Remaining: " + guessesLeft + "</p>" +
+      "<p>Letters Already Guessed: " + guessedLetters + "</p>";
+    document.querySelector(".gamearea").innerHTML = results;
+
+}
+   
+
+</script>
+
+</body>
+</html>
